@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Ek+Mukta:700|Muli:200,300,400");
 html,
 body {
-  height: 100%;
+  height: 100vh;
   margin: 0;
   background: black;
 }
@@ -14,11 +14,15 @@ p {
   padding: 0;
 }
 
-figure {
+#photo-img {
   margin: 0;
   width: 100%;
   height: 100%;
   opacity: 1;
+  max-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  border: 0;
 }
 
 .potd {
@@ -60,73 +64,6 @@ figure {
   right: 0;
   top: 0;
   bottom: 0;
-}
-
-.potdHeader {
-  margin-bottom: 15px;
-}
-
-.potdCategory {
-  display: block;
-  position: relative;
-  padding-left: 25px;
-  font-family: "Muli", sans-serif;
-  font-size: 14px;
-  line-height: 20px;
-  opacity: 0;
-  left: -20px;
-}
-
-.potdCategory::before {
-  content: "";
-  display: block;
-  position: absolute;
-  left: 0;
-  top: 9px;
-  width: 15px;
-  height: 2px;
-  background-color: #DC143C;
-}
-
-.potd h1 {
-  position: relative;
-  margin-top: 3px;
-  font-weight: 700;
-  font-family: "Ek Mukta", sans-serif;
-  font-size: 60px;
-  line-height: 60px;
-  text-transform: uppercase;
-  color: white;
-  left: -20px;
-  opacity: 0;
-}
-
-.photo-legend {
-  margin-top: 25px;
-  position: relative;
-  font-weight: 200;
-  font-family: "Muli", sans-serif;
-  font-size: 2em;
-  line-height: 25px;
-  opacity: 0;
-  left: -20px;
-}
-
-.photo-legend h3 {
-  margin: 10px 0;
-  font-weight: 700;
-  font-size: 1.5em;
-}
-
-.photo-legend p {
-  margin: 10px 0;
-}
-
-.photo-legend small {
-  font-size: 25px;
-  height: 120px;
-  letter-spacing: 2px;
-  line-height: 70px;
 }
 
 .credits {

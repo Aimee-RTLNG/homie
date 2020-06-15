@@ -6,4 +6,3 @@
 [] - Crédits photo
 [] - Liste de tâches
 [] - Widget météo réaliste
-[] - Redimensionner images ? 
