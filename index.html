@@ -16,15 +16,20 @@
 <body>
     <article class="potd">
 
-        <img class="photo-img" id="photo-img" style="background-image: url(https://source.unsplash.com/collection/10728712/1920x1080)" />
+        <figure class="photo-img" id="photo-img" style="background-image: url(https://source.unsplash.com/collection/10728712/1920x1080/daily)"></figure>
 
-        <h1>HOMIE</h1>
-        <h3 id="date"> DATE </h3>
-        <h3 id="clock"> HEURE </h3>
+        <div class="today-display">
+            <h3 id="date-display"></h3>
+            <h3 id="time-display"></h3>
+        </div>
+
+        <div class="now-message">
+            <p id="message-display"></p>
+        </div>
 
         <a href="https://unsplash.com/collections/10728712/potd---sew" target="_blank">
-            <footer class="credits" id="credits">
-                <img src='img/unsplash_logo.png' class="logo-bing" alt="Source : Unsplash">
+            <footer id="credits-display">
+                <img src='img/unsplash_logo.png' class="logo-bing" alt="Collection Unsplash">
             </footer>
         </a>
     </article>

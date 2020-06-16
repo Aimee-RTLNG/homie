@@ -12,17 +12,7 @@ h3,
 p {
   margin: 0;
   padding: 0;
-}
-
-#photo-img {
-  margin: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 1;
-  max-height: 100vh;
-  background-size: cover;
-  background-position: center;
-  border: 0;
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
 }
 
 .potd {
@@ -35,38 +25,86 @@ p {
   color: #fff;
 }
 
-.full-container {
-  position: absolute;
-  z-index: 10;
-  left: 30px;
-  right: 60px;
-  top: 200px;
-  padding: 30px 30px 30px 35px;
-  -webkit-transform: translateY(-50%);
-  transform: translateY(-50%);
+.potd #photo-img {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  max-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  border: 0;
   opacity: 0;
-  width: auto;
+  -webkit-transition: .5s ease-in-out all;
+  transition: .5s ease-in-out all;
 }
 
-.potdContainerBefore {
-  display: block;
+.potd #photo-img.displayed {
+  opacity: 1;
+}
+
+.potd .today-display {
   position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 0px;
-  background-color: #DC143C;
+  top: 50px;
+  left: 50px;
+  text-align: center;
 }
 
-.potdFigure {
+.potd .today-display #time-display {
+  font-size: 100px;
+  font-weight: bold;
+  color: white;
+  -webkit-filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.4));
+  filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.4));
+  opacity: 0;
+  -webkit-transition: .5s ease-in-out all;
+  transition: .5s ease-in-out all;
+  letter-spacing: 7px;
+}
+
+.potd .today-display #time-display.displayed {
+  opacity: 1;
+}
+
+.potd .today-display #date-display {
+  font-size: 40px;
+  font-weight: bold;
+  color: white;
+  -webkit-filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.4));
+  filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.4));
+  opacity: 0;
+  -webkit-transition: .5s ease-in-out all;
+  transition: .5s ease-in-out all;
+  letter-spacing: 5px;
+}
+
+.potd .today-display #date-display.displayed {
+  opacity: 1;
+}
+
+.potd .now-message {
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
+  bottom: 50px;
+  right: 50px;
+  text-align: center;
 }
 
-.credits {
+.potd .now-message #message-display {
+  font-size: 40px;
+  font-weight: bold;
+  color: white;
+  -webkit-filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.4));
+  filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.4));
+  opacity: 0;
+  -webkit-transition: .5s ease-in-out all;
+  transition: .5s ease-in-out all;
+}
+
+.potd .now-message #message-display.displayed {
+  opacity: 1;
+}
+
+.potd #credits-display {
   position: fixed;
   bottom: 60px;
   left: 60px;
@@ -81,12 +119,18 @@ p {
           align-items: center;
   width: 50px;
   height: 50px;
-  opacity: 1;
   -webkit-filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.5));
   filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.5));
+  opacity: 0;
+  -webkit-transition: .5s ease-in-out all;
+  transition: .5s ease-in-out all;
 }
 
-.credits img {
+.potd #credits-display img {
   width: 100%;
+}
+
+.potd #credits-display.displayed {
+  opacity: 1;
 }
 /*# sourceMappingURL=global.css.map */
