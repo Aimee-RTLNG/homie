@@ -82,6 +82,49 @@ p {
   opacity: 1;
 }
 
+.potd #weather-display {
+  position: absolute;
+  top: 50px;
+  right: 50px;
+  max-width: 500px;
+  background: white;
+  border-radius: 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 10px;
+  color: black;
+  -webkit-transition: .5s ease-in-out all;
+  transition: .5s ease-in-out all;
+  opacity: 0;
+}
+
+.potd #weather-display img {
+  width: 100px;
+  border-radius: 5px;
+}
+
+.potd #weather-display p {
+  font-size: 12px;
+  text-transform: capitalize;
+  margin-right: 10px;
+}
+
+.potd #weather-display p#weather-temp {
+  font-weight: bold;
+  font-size: 25px;
+}
+
+.potd #weather-display.displayed {
+  opacity: 1;
+}
+
 .potd .now-message {
   position: absolute;
   bottom: 50px;

@@ -79,7 +79,42 @@ p {
                 opacity: 1;
             }
         }
+    }
+    
+    #weather-display{
+        position: absolute;
+        top: 50px;
+        right: 50px; 
+        max-width: 500px;
+        background: white;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        color: black;
+        transition: .5s ease-in-out all;
+        opacity: 0;
 
+        img{
+            width: 100px;
+            border-radius: 5px;
+        }
+
+        p{
+            font-size: 12px;
+            text-transform: capitalize;
+            margin-right: 10px;
+
+            &#weather-temp{
+                font-weight: bold;
+                font-size: 25px;
+            }
+        }
+
+        &.displayed{
+            opacity: 1;
+        }
     }
 
     .now-message{
@@ -127,7 +162,6 @@ p {
             opacity: 1;
         }
     }
-    
     
 }
 

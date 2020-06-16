@@ -1,13 +1,17 @@
 
-
-interface today {
+class today {
     time: string;
     date: string;
     message: string;
 }
 
-function inter(today : today){
-    console.log(today.time + ' ' + today.date);
+class weather {
+    id: number;
+    temp: number;
+    desc: string;
+}
+
+function setToday(today : today){
     let date_display = document.getElementById('date-display');
     let photo_display = document.getElementById('photo-img');
     let time_display = document.getElementById('time-display');
@@ -24,13 +28,51 @@ function inter(today : today){
     window.setInterval( () => credits_display.classList.add("displayed"), 600);
 }
 
+function setWeather(weather : weather){
+    console.log(weather);
+
+    let weather_display = document.getElementById('weather-display');
+    let weather_icon = document.getElementById('weather-icon');
+    let weather_temp = document.getElementById('weather-temp');
+    let weather_desc = document.getElementById('weather-desc');
+
+    weather_temp.innerHTML = weather.temp + "°";
+    weather_desc.innerHTML = weather.desc;
+
+    if ( weather.id < 300 ) {
+        console.log( "Thunderstorm" );
+        weather_icon.setAttribute("src", "./img/storm.gif");
+    } else if ( weather.id > 300 && weather.id < 499 ) {
+        console.log( "Drizzle" );
+        weather_icon.setAttribute("src", "./img/rain.gif");
+    } else if ( weather.id > 499 && weather.id < 599 ) {
+        console.log( "Rain" );
+        weather_icon.setAttribute("src", "./img/rain.gif");
+    } else if ( weather.id > 599 && weather.id < 699 ) {
+        console.log( "Snow" );
+        weather_icon.setAttribute("src", "./img/snow.gif");
+    } else if ( weather.id > 699 && weather.id < 800 ) {
+        console.log( "Atmosphere" );
+        weather_icon.setAttribute("src", "./img/sun.gif");
+    } else if ( weather.id == 800 ) {
+        console.log( "Clear" );
+        weather_icon.setAttribute("src", "./img/sun.gif");
+    } else if ( weather.id >= 801 ) {
+        console.log( "Clouds" );
+        weather_icon.setAttribute("src", "./img/sun.gif");
+    }
+
+    weather_display.classList.add("displayed");
+
+}
+
 function checkTime(i : number) {
     let y : string;
     if (i < 10) {
         y = "0" + i.toString();
     } else {
         y = i.toString();
-    }; // add zero in front of numbers < 10
+    };
     return y;
 }
 
@@ -51,30 +93,55 @@ function startTime(date : Date = new Date()) {
 
 function getMsg(date : Date = new Date()) {
     let message : string;
-    if ( date.getHours() < 11 ) {
+    let hour = date.getHours();
+    if ( hour < 11 ) {
         message = "Bonne matinée";
-    } else if ( date.getHours() > 11 && date.getHours() > 13 ) {
+    } else if ( hour > 11 && hour < 13 ) {
         message = "Bon appétit";
-    } else if ( date.getHours() > 13 && date.getHours() > 17 ) {
+    } else if ( hour > 13 && hour < 17 ) {
         message = "Bon après-midi";
-    } else if ( date.getHours() > 13 && date.getHours() > 17 ) {
+    } else if ( hour > 17 && hour < 21 ) {
         message = "Bonne soirée";
-    } else if ( date.getHours() > 17 && date.getHours() < 23 ) {
+    } else if ( hour > 21 && hour < 23 ) {
         message = "Bonne fin de soirée";
     } else {
         message = "Bonne journée";
     }
+
     return message;
-}
+};
 
 window.onload = () => {
+
+    // Date et heure 
 
     let date = new Date();
     let time = startTime();
     let message = getMsg();
-    let interfaceExe = { time : time , date : date.toLocaleDateString('fr-FR'), message : message};
+    let today = { time : time , date : date.toLocaleDateString('fr-FR'), message : message };
 
-    var t = setInterval(startTime, 1000);
+    setInterval(startTime, 1000); // Actualisation de l'heure
+    setToday(today);
 
-    inter(interfaceExe);
-}
+    // Météo 
+
+    let xhr: XMLHttpRequest;
+
+    let get_weather = callback => {
+        let weather : object;
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "http://api.openweathermap.org/data/2.5/weather?id=3014078&appid=ff0c5236a672176a7f454c9a5c73c634&lang=fr&units=metric");
+        xhr.responseType = 'json';
+        xhr.onload = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                weather = xhr.response;
+                let response = { temp : weather["main"]["temp"], id : weather["weather"][0]["id"], desc : weather["weather"][0]["description"] }
+                callback( response );
+            }
+        }
+        xhr.send(null);
+    };
+
+    get_weather(weather_info => setWeather(weather_info));
+    
+};
