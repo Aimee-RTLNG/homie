@@ -1,3 +1,6 @@
+"use strict";
+exports.__esModule = true;
+var config_1 = require("./config");
 var today = /** @class */ (function () {
     function today() {
     }
@@ -7,6 +10,11 @@ var weather = /** @class */ (function () {
     function weather() {
     }
     return weather;
+}());
+var image = /** @class */ (function () {
+    function image() {
+    }
+    return image;
 }());
 function setToday(today) {
     var date_display = document.getElementById('date-display');
@@ -22,6 +30,9 @@ function setToday(today) {
     window.setInterval(function () { return message_display.classList.add("displayed"); }, 600);
     window.setInterval(function () { return credits_display.classList.add("displayed"); }, 600);
 }
+function setImage(image) {
+    console.log(image);
+}
 function setWeather(weather) {
     console.log(weather);
     var weather_display = document.getElementById('weather-display');
@@ -31,31 +42,24 @@ function setWeather(weather) {
     weather_temp.innerHTML = weather.temp + "°";
     weather_desc.innerHTML = weather.desc;
     if (weather.id < 300) {
-        console.log("Thunderstorm");
         weather_icon.setAttribute("src", "./img/storm.gif");
     }
     else if (weather.id > 300 && weather.id < 499) {
-        console.log("Drizzle");
         weather_icon.setAttribute("src", "./img/rain.gif");
     }
     else if (weather.id > 499 && weather.id < 599) {
-        console.log("Rain");
         weather_icon.setAttribute("src", "./img/rain.gif");
     }
     else if (weather.id > 599 && weather.id < 699) {
-        console.log("Snow");
         weather_icon.setAttribute("src", "./img/snow.gif");
     }
     else if (weather.id > 699 && weather.id < 800) {
-        console.log("Atmosphere");
         weather_icon.setAttribute("src", "./img/sun.gif");
     }
     else if (weather.id == 800) {
-        console.log("Clear");
         weather_icon.setAttribute("src", "./img/sun.gif");
     }
     else if (weather.id >= 801) {
-        console.log("Clouds");
         weather_icon.setAttribute("src", "./img/sun.gif");
     }
     weather_display.classList.add("displayed");
@@ -118,9 +122,10 @@ window.onload = function () {
     // Météo 
     var xhr;
     var get_weather = function (callback) {
+        var weather_key = config_1.WEATHER_KEY;
         var weather;
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", "http://api.openweathermap.org/data/2.5/weather?id=3014078&appid=ff0c5236a672176a7f454c9a5c73c634&lang=fr&units=metric");
+        xhr.open("GET", "http://api.openweathermap.org/data/2.5/weather?id=3014078&appid=" + weather_key + "&lang=fr&units=metric");
         xhr.responseType = 'json';
         xhr.onload = function () {
             if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
@@ -132,4 +137,23 @@ window.onload = function () {
         xhr.send(null);
     };
     get_weather(function (weather_info) { return setWeather(weather_info); });
+    // Photo 
+    var get_url = function (callback) {
+        var unsplash_key = config_1.UNSPLASH_KEY;
+        var url;
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "https://api.unsplash.com/photos/random/?client_id=" + unsplash_key + "&collections=10728712");
+        xhr.responseType = 'json';
+        xhr.onload = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                var response = xhr.response;
+                callback(response);
+            }
+            else {
+                console.log(xhr.status);
+            }
+        };
+        xhr.send(null);
+    };
+    get_url(function (image) { return setImage(image); });
 };

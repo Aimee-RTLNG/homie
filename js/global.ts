@@ -1,4 +1,5 @@
 
+
 class today {
     time: string;
     date: string;
@@ -9,6 +10,13 @@ class weather {
     id: number;
     temp: number;
     desc: string;
+}
+
+class image {
+    url: URL;
+    desc: string;
+    author: string;
+    location: string;
 }
 
 function setToday(today : today){
@@ -28,6 +36,11 @@ function setToday(today : today){
     window.setInterval( () => credits_display.classList.add("displayed"), 600);
 }
 
+function setImage( image : object ){
+    console.log(image);
+
+}
+
 function setWeather(weather : weather){
     console.log(weather);
 
@@ -40,25 +53,18 @@ function setWeather(weather : weather){
     weather_desc.innerHTML = weather.desc;
 
     if ( weather.id < 300 ) {
-        console.log( "Thunderstorm" );
         weather_icon.setAttribute("src", "./img/storm.gif");
     } else if ( weather.id > 300 && weather.id < 499 ) {
-        console.log( "Drizzle" );
         weather_icon.setAttribute("src", "./img/rain.gif");
     } else if ( weather.id > 499 && weather.id < 599 ) {
-        console.log( "Rain" );
         weather_icon.setAttribute("src", "./img/rain.gif");
     } else if ( weather.id > 599 && weather.id < 699 ) {
-        console.log( "Snow" );
         weather_icon.setAttribute("src", "./img/snow.gif");
     } else if ( weather.id > 699 && weather.id < 800 ) {
-        console.log( "Atmosphere" );
         weather_icon.setAttribute("src", "./img/sun.gif");
     } else if ( weather.id == 800 ) {
-        console.log( "Clear" );
         weather_icon.setAttribute("src", "./img/sun.gif");
     } else if ( weather.id >= 801 ) {
-        console.log( "Clouds" );
         weather_icon.setAttribute("src", "./img/sun.gif");
     }
 
@@ -128,9 +134,12 @@ window.onload = () => {
     let xhr: XMLHttpRequest;
 
     let get_weather = callback => {
+
+        var weather_key = config.KEY_WEATHER;
+
         let weather : object;
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", "http://api.openweathermap.org/data/2.5/weather?id=3014078&appid=ff0c5236a672176a7f454c9a5c73c634&lang=fr&units=metric");
+        xhr.open("GET", "http://api.openweathermap.org/data/2.5/weather?id=3014078&appid="+weather_key+"&lang=fr&units=metric");
         xhr.responseType = 'json';
         xhr.onload = function() {
             if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
@@ -143,5 +152,28 @@ window.onload = () => {
     };
 
     get_weather(weather_info => setWeather(weather_info));
+
+    // Photo 
+
+    let get_url = callback => {
+
+        var unsplash_key = config.KEY_UNSPLASH;
+
+        let url : string;
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "https://api.unsplash.com/photos/random/?client_id="+unsplash_key+"&collections=10728712");
+        xhr.responseType = 'json';
+        xhr.onload = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                let response = xhr.response;
+                callback( response );
+            } else {
+                console.log( xhr.status );
+            }
+        }
+        xhr.send(null);
+    };
+
+    get_url(image => setImage(image));
     
 };
