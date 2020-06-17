@@ -1,6 +1,3 @@
-"use strict";
-exports.__esModule = true;
-var config_1 = require("./config");
 var today = /** @class */ (function () {
     function today() {
     }
@@ -18,7 +15,6 @@ var image = /** @class */ (function () {
 }());
 function setToday(today) {
     var date_display = document.getElementById('date-display');
-    var photo_display = document.getElementById('photo-img');
     var time_display = document.getElementById('time-display');
     var message_display = document.getElementById('message-display');
     var credits_display = document.getElementById('credits-display');
@@ -26,15 +22,30 @@ function setToday(today) {
     message_display.innerHTML = today.message;
     window.setInterval(function () { return time_display.classList.add("displayed"); }, 100);
     window.setInterval(function () { return date_display.classList.add("displayed"); }, 300);
-    window.setInterval(function () { return photo_display.classList.add("displayed"); }, 500);
     window.setInterval(function () { return message_display.classList.add("displayed"); }, 600);
     window.setInterval(function () { return credits_display.classList.add("displayed"); }, 600);
 }
 function setImage(image) {
-    console.log(image);
+    var image_url = (image['urls']['regular']);
+    var image_caption = image['location'];
+    var image_display = document.getElementById('photo-img');
+    if (image_url) {
+        var img = new Image();
+        img.src = image_url;
+        img.onload = function () {
+            image_display.style.backgroundImage = "url(" + image_url + ")";
+            window.setInterval(function () {
+                image_display.classList.add("displayed");
+                initDay();
+            }, 500);
+        };
+    }
+    var caption_display = document.getElementById('photo-caption');
+    if (image_caption) {
+        caption_display.innerText = image_caption;
+    }
 }
 function setWeather(weather) {
-    console.log(weather);
     var weather_display = document.getElementById('weather-display');
     var weather_icon = document.getElementById('weather-icon');
     var weather_temp = document.getElementById('weather-temp');
@@ -111,7 +122,7 @@ function getMsg(date) {
     return message;
 }
 ;
-window.onload = function () {
+function initDay() {
     // Date et heure 
     var date = new Date();
     var time = startTime();
@@ -121,8 +132,8 @@ window.onload = function () {
     setToday(today);
     // Météo 
     var xhr;
+    var weather_key = localStorage.getItem("KEY_WEATHER");
     var get_weather = function (callback) {
-        var weather_key = config_1.WEATHER_KEY;
         var weather;
         var xhr = new XMLHttpRequest();
         xhr.open("GET", "http://api.openweathermap.org/data/2.5/weather?id=3014078&appid=" + weather_key + "&lang=fr&units=metric");
@@ -137,9 +148,11 @@ window.onload = function () {
         xhr.send(null);
     };
     get_weather(function (weather_info) { return setWeather(weather_info); });
+}
+window.onload = function () {
     // Photo 
+    var unsplash_key = localStorage.getItem("KEY_UNSPLASH");
     var get_url = function (callback) {
-        var unsplash_key = config_1.UNSPLASH_KEY;
         var url;
         var xhr = new XMLHttpRequest();
         xhr.open("GET", "https://api.unsplash.com/photos/random/?client_id=" + unsplash_key + "&collections=10728712");

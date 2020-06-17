@@ -1,5 +1,3 @@
-
-
 class today {
     time: string;
     date: string;
@@ -21,7 +19,6 @@ class image {
 
 function setToday(today : today){
     let date_display = document.getElementById('date-display');
-    let photo_display = document.getElementById('photo-img');
     let time_display = document.getElementById('time-display');
     let message_display = document.getElementById('message-display');
     let credits_display = document.getElementById('credits-display');
@@ -31,18 +28,37 @@ function setToday(today : today){
 
     window.setInterval( () => time_display.classList.add("displayed"), 100);
     window.setInterval( () => date_display.classList.add("displayed"), 300);
-    window.setInterval( () => photo_display.classList.add("displayed"), 500);
     window.setInterval( () => message_display.classList.add("displayed"), 600);
     window.setInterval( () => credits_display.classList.add("displayed"), 600);
 }
 
 function setImage( image : object ){
-    console.log(image);
+
+    let image_url : string = (image['urls']['regular']);
+    let image_caption : string = image['location'];
+    
+    let image_display = document.getElementById('photo-img');
+    if( image_url ) {
+        var img = new Image();
+        img.src = image_url;
+        img.onload = function() {
+            image_display.style.backgroundImage = "url("+image_url+")";
+            window.setInterval( function(){
+                    image_display.classList.add("displayed")
+                    initDay();
+                }
+            , 500);
+        };
+    }
+
+    let caption_display = document.getElementById('photo-caption');
+    if(image_caption) {
+        caption_display.innerText = image_caption;
+    }
 
 }
 
 function setWeather(weather : weather){
-    console.log(weather);
 
     let weather_display = document.getElementById('weather-display');
     let weather_icon = document.getElementById('weather-icon');
@@ -117,8 +133,7 @@ function getMsg(date : Date = new Date()) {
     return message;
 };
 
-window.onload = () => {
-
+function initDay(){
     // Date et heure 
 
     let date = new Date();
@@ -132,10 +147,8 @@ window.onload = () => {
     // Météo 
 
     let xhr: XMLHttpRequest;
-
+    let weather_key = localStorage.getItem("KEY_WEATHER"); 
     let get_weather = callback => {
-
-        var weather_key = config.KEY_WEATHER;
 
         let weather : object;
         var xhr = new XMLHttpRequest();
@@ -153,11 +166,14 @@ window.onload = () => {
 
     get_weather(weather_info => setWeather(weather_info));
 
+}
+
+window.onload = () => {
+
     // Photo 
 
+    let unsplash_key = localStorage.getItem("KEY_UNSPLASH"); 
     let get_url = callback => {
-
-        var unsplash_key = config.KEY_UNSPLASH;
 
         let url : string;
         var xhr = new XMLHttpRequest();
@@ -175,5 +191,6 @@ window.onload = () => {
     };
 
     get_url(image => setImage(image));
+
     
 };
