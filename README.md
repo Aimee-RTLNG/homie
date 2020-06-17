@@ -9,13 +9,13 @@ https://aimee-rtlng.github.io/homie/
 
 *******************
 
-*** Add config.js in /js ***
+Add config.js in /js
 
 ```
-    var config = {
-        KEY_WEATHER : OpenWeatherMap API key,
-        KEY_UNSPLASH : Unsplash API key
-    };
-    localStorage.setItem("KEY_WEATHER", config.KEY_WEATHER);  
-    localStorage.setItem("KEY_UNSPLASH", config.KEY_UNSPLASH);  
+var config = {
+    KEY_WEATHER : OpenWeatherMap API key,
+    KEY_UNSPLASH : Unsplash API key
+};
+localStorage.setItem("KEY_WEATHER", config.KEY_WEATHER);  
+localStorage.setItem("KEY_UNSPLASH", config.KEY_UNSPLASH);  
 ```
