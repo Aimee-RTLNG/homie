@@ -7,8 +7,9 @@ First project in Typescript
 
 https://aimee-rtlng.github.io/homie/
 
-*** Add config.js in /js ***
 *******************
+
+*** Add config.js in /js ***
 
 `
     var config = {
