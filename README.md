@@ -1,5 +1,5 @@
 # HOMIE
-Homepage with a daily picture from an Unsplash collection (10728712) and some widgets : time and date, greetings, weather (WIP) ...
+Homepage with a daily picture from an Unsplash collection (https://unsplash.com/collections/10728712/) and some widgets : time and date, greetings, weather (WIP) ...
 
 Supposed to give be similar to Tabliss
 
