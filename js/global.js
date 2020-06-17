@@ -28,7 +28,7 @@ function setToday(today) {
 function setImage(image) {
     var image_url;
     var image_caption;
-    if (image['urls']['regular']) {
+    if (image['urls'] && image['urls']['regular']) {
         image_url = (image['urls']['regular']);
         image_caption = image['location']['title'];
     }
@@ -48,7 +48,7 @@ function setImage(image) {
         }, 500);
     };
     img.onerror = function () {
-        image_url = "./img/blank.png";
+        image_url = "./img/blank.jpg";
         image_display.style.backgroundImage = "url(" + image_url + ")";
         window.setInterval(function () { return image_display.classList.add("displayed"); }, 500);
         initDay();
