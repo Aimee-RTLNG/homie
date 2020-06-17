@@ -35,26 +35,31 @@ function setToday(today : today){
 function setImage( image : object ){
 
     let image_url : string = (image['urls']['regular']);
-    let image_caption : string = image['location'];
+    let image_caption : string = image['location']['title'];
     
     let image_display = document.getElementById('photo-img');
-    if( image_url ) {
-        var img = new Image();
-        img.src = image_url;
-        img.onload = function() {
-            image_display.style.backgroundImage = "url("+image_url+")";
-            window.setInterval( function(){
-                    image_display.classList.add("displayed")
-                    initDay();
-                }
-            , 500);
-        };
+    if( !image_url ) {
+        image_url = "./img/blank.png";
     }
 
-    let caption_display = document.getElementById('photo-caption');
-    if(image_caption) {
-        caption_display.innerText = image_caption;
-    }
+    var img = new Image();
+    img.src = image_url;
+    img.onload = function() {
+        image_display.style.backgroundImage = "url("+image_url+")";
+        window.setInterval( 
+            function(){
+                image_display.classList.add("displayed");
+                let caption_display = document.getElementById('photo-caption');
+                if(image_caption) {
+                    caption_display.innerText = image_caption;
+                    caption_display.classList.add("displayed");
+                }
+                initDay();
+            }
+        , 500);
+    };
+
+
 
 }
 
@@ -65,23 +70,23 @@ function setWeather(weather : weather){
     let weather_temp = document.getElementById('weather-temp');
     let weather_desc = document.getElementById('weather-desc');
 
-    weather_temp.innerHTML = weather.temp + "°";
+    weather_temp.innerHTML = weather.temp + "°C";
     weather_desc.innerHTML = weather.desc;
 
     if ( weather.id < 300 ) {
-        weather_icon.setAttribute("src", "./img/storm.gif");
+        weather_icon.setAttribute("src", "./img/weather/storm.svg");
     } else if ( weather.id > 300 && weather.id < 499 ) {
-        weather_icon.setAttribute("src", "./img/rain.gif");
+        weather_icon.setAttribute("src", "./img/weather/rain.svg");
     } else if ( weather.id > 499 && weather.id < 599 ) {
-        weather_icon.setAttribute("src", "./img/rain.gif");
+        weather_icon.setAttribute("src", "./img/weather/rain.svg");
     } else if ( weather.id > 599 && weather.id < 699 ) {
-        weather_icon.setAttribute("src", "./img/snow.gif");
+        weather_icon.setAttribute("src", "./img/weather/snow.svg");
     } else if ( weather.id > 699 && weather.id < 800 ) {
-        weather_icon.setAttribute("src", "./img/sun.gif");
+        weather_icon.setAttribute("src", "./img/weather/couvert.svg");
     } else if ( weather.id == 800 ) {
-        weather_icon.setAttribute("src", "./img/sun.gif");
+        weather_icon.setAttribute("src", "./img/weather/clear.svg");
     } else if ( weather.id >= 801 ) {
-        weather_icon.setAttribute("src", "./img/sun.gif");
+        weather_icon.setAttribute("src", "./img/weather/clouds.svg");
     }
 
     weather_display.classList.add("displayed");
@@ -184,7 +189,8 @@ window.onload = () => {
                 let response = xhr.response;
                 callback( response );
             } else {
-                console.log( xhr.status );
+                console.log('Limite API');
+                callback( "" );
             }
         }
         xhr.send(null);

@@ -44,6 +44,17 @@ p {
         }
     }
 
+    #photo-caption{
+        position: fixed;
+        bottom: 60px;
+        left: 125px;
+        opacity: 0;
+
+        &.displayed{
+            opacity: 1;
+        }
+    }
+
     .today-display {
         position: absolute;
         top: 50px;
@@ -91,14 +102,14 @@ p {
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 10px;
+        padding: 5px 10px;
         color: black;
         transition: .5s ease-in-out all;
         opacity: 0;
 
         img{
-            width: 100px;
-            border-radius: 5px;
+            width: 35px;
+            margin-right: 10px;
         }
 
         p{
@@ -108,7 +119,7 @@ p {
 
             &#weather-temp{
                 font-weight: bold;
-                font-size: 25px;
+                font-size: 20px;
             }
         }
 

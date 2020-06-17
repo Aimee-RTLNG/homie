@@ -43,6 +43,17 @@ p {
   opacity: 1;
 }
 
+.potd #photo-caption {
+  position: fixed;
+  bottom: 60px;
+  left: 125px;
+  opacity: 0;
+}
+
+.potd #photo-caption.displayed {
+  opacity: 1;
+}
+
 .potd .today-display {
   position: absolute;
   top: 50px;
@@ -98,7 +109,7 @@ p {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  padding: 10px;
+  padding: 5px 10px;
   color: black;
   -webkit-transition: .5s ease-in-out all;
   transition: .5s ease-in-out all;
@@ -106,8 +117,8 @@ p {
 }
 
 .potd #weather-display img {
-  width: 100px;
-  border-radius: 5px;
+  width: 35px;
+  margin-right: 10px;
 }
 
 .potd #weather-display p {
@@ -118,7 +129,7 @@ p {
 
 .potd #weather-display p#weather-temp {
   font-weight: bold;
-  font-size: 25px;
+  font-size: 20px;
 }
 
 .potd #weather-display.displayed {
