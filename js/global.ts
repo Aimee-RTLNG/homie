@@ -58,9 +58,6 @@ function setImage( image : object ){
             }
         , 500);
     };
-
-
-
 }
 
 function setWeather(weather : weather){
@@ -70,7 +67,7 @@ function setWeather(weather : weather){
     let weather_temp = document.getElementById('weather-temp');
     let weather_desc = document.getElementById('weather-desc');
 
-    weather_temp.innerHTML = weather.temp + "°C";
+    weather_temp.innerHTML = Math.ceil(weather.temp) + "°C";
     weather_desc.innerHTML = weather.desc;
 
     if ( weather.id < 300 ) {
@@ -157,7 +154,7 @@ function initDay(){
 
         let weather : object;
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", "http://api.openweathermap.org/data/2.5/weather?id=3014078&appid="+weather_key+"&lang=fr&units=metric");
+        xhr.open("GET", "http://api.openweathermap.org/data/2.5/weather?lat=48.82&lon=7.79&appid="+weather_key+"&lang=fr&units=metric");
         xhr.responseType = 'json';
         xhr.onload = function() {
             if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {

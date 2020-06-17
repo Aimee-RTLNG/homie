@@ -52,7 +52,7 @@ function setWeather(weather) {
     var weather_icon = document.getElementById('weather-icon');
     var weather_temp = document.getElementById('weather-temp');
     var weather_desc = document.getElementById('weather-desc');
-    weather_temp.innerHTML = weather.temp + "°C";
+    weather_temp.innerHTML = Math.ceil(weather.temp) + "°C";
     weather_desc.innerHTML = weather.desc;
     if (weather.id < 300) {
         weather_icon.setAttribute("src", "./img/weather/storm.svg");
@@ -138,7 +138,7 @@ function initDay() {
     var get_weather = function (callback) {
         var weather;
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", "http://api.openweathermap.org/data/2.5/weather?id=3014078&appid=" + weather_key + "&lang=fr&units=metric");
+        xhr.open("GET", "http://api.openweathermap.org/data/2.5/weather?lat=48.82&lon=7.79&appid=" + weather_key + "&lang=fr&units=metric");
         xhr.responseType = 'json';
         xhr.onload = function () {
             if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
