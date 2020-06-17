@@ -7,10 +7,9 @@ First project in Typescript
 
 https://aimee-rtlng.github.io/homie/
 
-# How to make it work : 
+*** Add config.js in /js ***
+*******************
 
-Add config.js in /js
-and add
 `
     var config = {
         KEY_WEATHER : OpenWeatherMap API key,
