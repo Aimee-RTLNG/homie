@@ -27,37 +27,44 @@ function setToday(today : today){
     message_display.innerHTML = today.message;
 
     window.setInterval( () => time_display.classList.add("displayed"), 100);
-    window.setInterval( () => date_display.classList.add("displayed"), 300);
+    window.setInterval( () => date_display.classList.add("displayed"), 100);
     window.setInterval( () => message_display.classList.add("displayed"), 600);
-    window.setInterval( () => credits_display.classList.add("displayed"), 600);
+    credits_display.classList.add("displayed");
 }
 
 function setImage( image : object ){
 
-    let image_url : string = (image['urls']['regular']);
-    let image_caption : string = image['location']['title'];
-    
-    let image_display = document.getElementById('photo-img');
-    if( !image_url ) {
-        image_url = "./img/blank.png";
+    let image_url : string;
+    let image_caption : string;
+    if( image['urls']['regular'] ) {
+        image_url = (image['urls']['regular']);
+        image_caption = image['location']['title'];
     }
 
-    var img = new Image();
-    img.src = image_url;
-    img.onload = function() {
-        image_display.style.backgroundImage = "url("+image_url+")";
-        window.setInterval( 
-            function(){
-                image_display.classList.add("displayed");
-                let caption_display = document.getElementById('photo-caption');
-                if(image_caption) {
-                    caption_display.innerText = image_caption;
-                    caption_display.classList.add("displayed");
+    let image_display = document.getElementById('photo-img');
+
+        var img = new Image();
+        img.src = image_url;
+        img.onload = function() {
+            image_display.style.backgroundImage = "url("+image_url+")";
+            window.setInterval( 
+                function(){
+                    image_display.classList.add("displayed");
+                    let caption_display = document.getElementById('photo-caption');
+                    if(image_caption) {
+                        caption_display.innerText = image_caption;
+                        caption_display.classList.add("displayed");
+                    }
+                    initDay();
                 }
-                initDay();
-            }
-        , 500);
-    };
+            , 500);
+        };
+        img.onerror = function(){
+            image_url = "./img/blank.png";
+            image_display.style.backgroundImage = "url("+image_url+")";
+            window.setInterval( () => image_display.classList.add("displayed") , 500);
+            initDay();
+        };
 }
 
 function setWeather(weather : weather){

@@ -21,17 +21,18 @@ function setToday(today) {
     date_display.innerHTML = today.date;
     message_display.innerHTML = today.message;
     window.setInterval(function () { return time_display.classList.add("displayed"); }, 100);
-    window.setInterval(function () { return date_display.classList.add("displayed"); }, 300);
+    window.setInterval(function () { return date_display.classList.add("displayed"); }, 100);
     window.setInterval(function () { return message_display.classList.add("displayed"); }, 600);
-    window.setInterval(function () { return credits_display.classList.add("displayed"); }, 600);
+    credits_display.classList.add("displayed");
 }
 function setImage(image) {
-    var image_url = (image['urls']['regular']);
-    var image_caption = image['location']['title'];
-    var image_display = document.getElementById('photo-img');
-    if (!image_url) {
-        image_url = "./img/blank.png";
+    var image_url;
+    var image_caption;
+    if (image['urls']['regular']) {
+        image_url = (image['urls']['regular']);
+        image_caption = image['location']['title'];
     }
+    var image_display = document.getElementById('photo-img');
     var img = new Image();
     img.src = image_url;
     img.onload = function () {
@@ -45,6 +46,12 @@ function setImage(image) {
             }
             initDay();
         }, 500);
+    };
+    img.onerror = function () {
+        image_url = "./img/blank.png";
+        image_display.style.backgroundImage = "url(" + image_url + ")";
+        window.setInterval(function () { return image_display.classList.add("displayed"); }, 500);
+        initDay();
     };
 }
 function setWeather(weather) {
