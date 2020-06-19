@@ -45,8 +45,8 @@ p {
 
 .potd #photo-caption {
   position: fixed;
-  bottom: 70px;
-  left: 125px;
+  bottom: 110px;
+  right: 70px;
   opacity: 0;
   font-size: 25px;
   -webkit-filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.4));
@@ -58,6 +58,11 @@ p {
 
 .potd #photo-caption.displayed {
   opacity: 1;
+}
+
+.potd #photo-caption:before {
+  content: "";
+  margin-right: 15px;
 }
 
 .potd .today-display {
@@ -104,7 +109,9 @@ p {
   top: 50px;
   right: 50px;
   max-width: 500px;
-  background: white;
+  background: rgba(255, 255, 255, 0.7);
+  -webkit-filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.2));
+  filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.2));
   border-radius: 5px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -145,7 +152,7 @@ p {
 .potd .now-message {
   position: absolute;
   bottom: 60px;
-  right: 50px;
+  left: 50px;
   text-align: center;
 }
 
@@ -167,17 +174,17 @@ p {
 .potd #credits-display {
   position: fixed;
   bottom: 60px;
-  left: 60px;
+  right: 60px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  font-size: 15px;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  width: 50px;
   height: 50px;
   -webkit-filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.5));
   filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.5));
@@ -192,5 +199,11 @@ p {
 
 .potd #credits-display.displayed {
   opacity: 1;
+}
+
+.potd #credits-display a {
+  color: white;
+  padding: 0 7px;
+  font-weight: bold;
 }
 /*# sourceMappingURL=global.css.map */

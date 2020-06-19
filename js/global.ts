@@ -11,10 +11,13 @@ class weather {
 }
 
 class image {
-    url: URL;
+    url: string;
     desc: string;
     author: string;
     location: string;
+    page: string;
+    download: string;
+    author_page: string;
 }
 
 function setToday(today : today){
@@ -32,36 +35,46 @@ function setToday(today : today){
     credits_display.classList.add("displayed");
 }
 
-function setImage( image : object ){
+function setImage( image : image ){
 
-    let image_url : string;
-    let image_caption : string;
+    console.log(image);
+
     if( image['urls'] && image['urls']['regular'] ) {
-        image_url = (image['urls']['regular']);
-        image_caption = image['location']['title'];
+        image.url = (image['urls']['regular']);
+        image.location = image['location']['title'];
+        image.author = image['user']['name'];
+        image.page = (image['links']['html']);
+        image.download = (image['links']['download']);
+        image.author_page = (image['user']['links']['html']);
     }
 
     let image_display = document.getElementById('photo-img');
-
         var img = new Image();
-        img.src = image_url;
+        img.src = image.url;
         img.onload = function() {
-            image_display.style.backgroundImage = "url("+image_url+")";
+            image_display.style.backgroundImage = "url("+image.url+")";
+            let photo_link = document.getElementById('photo-link');
+            photo_link.setAttribute("href", image.page);
             window.setInterval( 
                 function(){
                     image_display.classList.add("displayed");
                     let caption_display = document.getElementById('photo-caption');
-                    if(image_caption) {
-                        caption_display.innerText = image_caption;
+                    if(image.location) {
+                        caption_display.innerText = image.location;
                         caption_display.classList.add("displayed");
+                    }
+                    let photo_author = document.getElementById('photo-author');
+                    if( image.author ){
+                        photo_author.innerText = image.author;
+                        photo_author.setAttribute("href", image.author_page);
                     }
                     initDay();
                 }
             , 500);
         };
         img.onerror = function(){
-            image_url = "./img/blank.jpg";
-            image_display.style.backgroundImage = "url("+image_url+")";
+            image.url = "./img/blank.jpg";
+            image_display.style.backgroundImage = "url("+image.url+")";
             window.setInterval( () => image_display.classList.add("displayed") , 500);
             initDay();
         };

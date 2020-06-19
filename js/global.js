@@ -26,30 +26,42 @@ function setToday(today) {
     credits_display.classList.add("displayed");
 }
 function setImage(image) {
-    var image_url;
-    var image_caption;
+    console.log(image);
     if (image['urls'] && image['urls']['regular']) {
-        image_url = (image['urls']['regular']);
-        image_caption = image['location']['title'];
+        image.url = (image['urls']['regular']);
+        image.location = image['location']['title'];
+        image.author = image['user']['name'];
+        image.page = (image['links']['html']);
+        image.download = (image['links']['download']);
+        image.author_page = (image['user']['links']['html']);
     }
     var image_display = document.getElementById('photo-img');
     var img = new Image();
-    img.src = image_url;
+    img.src = image.url;
     img.onload = function () {
-        image_display.style.backgroundImage = "url(" + image_url + ")";
+        image_display.style.backgroundImage = "url(" + image.url + ")";
+        var photo_link = document.getElementById('photo-link');
+        photo_link.setAttribute("href", image.page);
+        var photo_download = document.getElementById('photo-download');
+        photo_download.setAttribute("href", image.download);
         window.setInterval(function () {
             image_display.classList.add("displayed");
             var caption_display = document.getElementById('photo-caption');
-            if (image_caption) {
-                caption_display.innerText = image_caption;
+            if (image.location) {
+                caption_display.innerText = image.location;
                 caption_display.classList.add("displayed");
+            }
+            var photo_author = document.getElementById('photo-author');
+            if (image.author) {
+                photo_author.innerText = image.author;
+                photo_author.setAttribute("href", image.author_page);
             }
             initDay();
         }, 500);
     };
     img.onerror = function () {
-        image_url = "./img/blank.jpg";
-        image_display.style.backgroundImage = "url(" + image_url + ")";
+        image.url = "./img/blank.jpg";
+        image_display.style.backgroundImage = "url(" + image.url + ")";
         window.setInterval(function () { return image_display.classList.add("displayed"); }, 500);
         initDay();
     };
