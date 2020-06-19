@@ -42,8 +42,6 @@ function setImage(image) {
         image_display.style.backgroundImage = "url(" + image.url + ")";
         var photo_link = document.getElementById('photo-link');
         photo_link.setAttribute("href", image.page);
-        var photo_download = document.getElementById('photo-download');
-        photo_download.setAttribute("href", image.download);
         window.setInterval(function () {
             image_display.classList.add("displayed");
             var caption_display = document.getElementById('photo-caption');
