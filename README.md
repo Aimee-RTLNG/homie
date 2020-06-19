@@ -5,16 +5,16 @@ Supposed to be similar to Tabliss
 
 First project in Typescript 
 
-https://aimee-rtlng.github.io/homie/
-
 *******************
 
-Add config.js in /js
+# You have to use your own API keys :
+
+Add this code in /js/config.js
 
 ```
 var config = {
-    KEY_WEATHER : OpenWeatherMap API key,
-    KEY_UNSPLASH : Unsplash API key
+    KEY_WEATHER : 'OpenWeatherMap API key',
+    KEY_UNSPLASH : 'Unsplash API key'
 };
 localStorage.setItem("KEY_WEATHER", config.KEY_WEATHER);  
 localStorage.setItem("KEY_UNSPLASH", config.KEY_UNSPLASH);  
