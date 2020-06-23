@@ -42,6 +42,7 @@ function setImage(image) {
         image_display.style.backgroundImage = "url(" + image.url + ")";
         var photo_link = document.getElementById('photo-link');
         photo_link.setAttribute("href", image.page);
+        // if( image['urls']['full'] ) getFullImg(image['urls']['full']);
         window.setInterval(function () {
             image_display.classList.add("displayed");
             var caption_display = document.getElementById('photo-caption');
@@ -55,7 +56,7 @@ function setImage(image) {
                 photo_author.setAttribute("href", image.author_page);
             }
             initDay();
-        }, 500);
+        }, 100);
     };
     img.onerror = function () {
         image.url = "./img/blank.jpg";
@@ -63,6 +64,16 @@ function setImage(image) {
         window.setInterval(function () { return image_display.classList.add("displayed"); }, 500);
         initDay();
     };
+}
+function getFullImg(url) {
+    if (url) {
+        var image_display_1 = document.getElementById('photo-img');
+        var img = new Image();
+        img.src = url;
+        img.onload = function () {
+            window.setInterval(function () { return image_display_1.style.backgroundImage = "url(" + url + ")"; }, 1000);
+        };
+    }
 }
 function setWeather(weather) {
     var weather_display = document.getElementById('weather-display');
@@ -172,9 +183,13 @@ window.onload = function () {
     // Photo 
     var unsplash_key = localStorage.getItem("KEY_UNSPLASH");
     var get_url = function (callback) {
-        var url;
+        var url = "https://api.unsplash.com/photos/random/?client_id=" + unsplash_key + "&collections=10728712";
+        var hour = new Date().getHours();
+        if (hour == 12) {
+            url = "https://api.unsplash.com/photos/random/?client_id=" + unsplash_key + "&collections=10783426";
+        }
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", "https://api.unsplash.com/photos/random/?client_id=" + unsplash_key + "&collections=10728712");
+        xhr.open("GET", url);
         xhr.responseType = 'json';
         xhr.onload = function () {
             if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {

@@ -35,6 +35,7 @@ function setToday(today : today){
     credits_display.classList.add("displayed");
 }
 
+
 function setImage( image : image ){
 
     console.log(image);
@@ -55,6 +56,7 @@ function setImage( image : image ){
             image_display.style.backgroundImage = "url("+image.url+")";
             let photo_link = document.getElementById('photo-link');
             photo_link.setAttribute("href", image.page);
+            // if( image['urls']['full'] ) getFullImg(image['urls']['full']);
             window.setInterval( 
                 function(){
                     image_display.classList.add("displayed");
@@ -70,7 +72,7 @@ function setImage( image : image ){
                     }
                     initDay();
                 }
-            , 500);
+            , 100);
         };
         img.onerror = function(){
             image.url = "./img/blank.jpg";
@@ -78,6 +80,18 @@ function setImage( image : image ){
             window.setInterval( () => image_display.classList.add("displayed") , 500);
             initDay();
         };
+}
+
+function getFullImg( url : string ){
+
+    if( url ) {
+        let image_display = document.getElementById('photo-img');
+        var img = new Image();
+        img.src = url;
+        img.onload = function() {
+            window.setInterval( () => image_display.style.backgroundImage = "url("+url+")" , 1000);
+        };
+    }
 }
 
 function setWeather(weather : weather){
@@ -193,13 +207,17 @@ function initDay(){
 window.onload = () => {
 
     // Photo 
-
     let unsplash_key = localStorage.getItem("KEY_UNSPLASH"); 
     let get_url = callback => {
 
-        let url : string;
+        let url : string = "https://api.unsplash.com/photos/random/?client_id="+unsplash_key+"&collections=10728712";
+        let hour = new Date().getHours();
+        if( hour == 12 ){
+            url = "https://api.unsplash.com/photos/random/?client_id="+unsplash_key+"&collections=10783426"; 
+        }
+        
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", "https://api.unsplash.com/photos/random/?client_id="+unsplash_key+"&collections=10728712");
+        xhr.open("GET", url);
         xhr.responseType = 'json';
         xhr.onload = function() {
             if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
